@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template1.html"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Patients</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="p-5">
+        <div class="card">
+            <div class ="card-header ">Liste patients</div>
+            <div class="card-body">
+              <!--  <form method="get" th:action="@{index}">
+                    <label>Keyword:</label>
+                    <input type="text" name="keyword" th:value="${keyword}">
+                    <button type="submit" class="btn btn-info">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </form>-->
+
+                <form class="d-lg-flex"  method="get" th:action="@{/user/index}">
+                        <input class="form-control-sm "
+                               type="search"
+                               placeholder="Keyword"
+                               aria-label="Search"
+                               name="keyword"
+                               th:value="${keyword}">
+                        <button class ="btn btn-outline-dark" type="submit">Search</button>
+
+                </form>
+
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>ID</th> <th>Nom</th> <th>DATE</th> <th>MALADE</th> <th>SCORE</th>
+                    </tr>
+                    <tr th:each="p:${listPatients}">
+                        <td th:text="${p.id}"></td>
+                        <td th:text="${p.name}"></td>
+                        <td th:text="${p.dateNaissance}"></td>
+                        <td th:text="${p.malade}"></td>
+                        <td th:text="${p.score}"></td>
+                        <td th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                            <a
+                                    onclick="javascript:return confirm('Ete vous sur ?')"
+                                    th:href="@{/admin/delete(id=${p.id},keyword=${keyword},page=${currentPage})}"
+                                    class="btn btn-danger">
+                                <i class="bi  bi-trash"></i>
+                            </a>
+                        </td>
+                        <td th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                            <a
+                                    th:href="@{/admin/editPatient(id=${p.id})}"
+                                    class="btn btn-success">
+                                <i class="bi  bi-pencil"></i>
+                            </a>
+                        </td>
+
+                    </tr>
+                    </thead>
+                </table>
+                <ul class="nav nav-pills " >
+                    <li th:each="value,item:${pages}">
+                        <a th:href="@{/user/index(page=${item.index},keyword=${keyword})}"
+                           th:class="${currentPage==item.index? 'btn btn-info m-1' : 'btn btn-outline-info m-1'}"
+                           th:text="${item.count}"></a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
