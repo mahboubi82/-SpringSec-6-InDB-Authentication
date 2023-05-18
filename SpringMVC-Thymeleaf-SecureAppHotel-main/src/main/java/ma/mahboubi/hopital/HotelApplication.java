@@ -29,7 +29,7 @@ public class HotelApplication implements CommandLineRunner {
         patientRepository.save(Patient.builder().name("ABDOU").dateNaissance(new Date()).score(1400).malade(false).build());
         patientRepository.save(Patient.builder().name("TATA").dateNaissance(new Date()).score(7700).malade(true).build());
     }
-    //@Bean
+    @Bean
     CommandLineRunner commandLineRunner(JdbcUserDetailsManager jdbcUserDetailsManager){
         PasswordEncoder passwordEncoder=passwordEncoder();
         return args -> {
