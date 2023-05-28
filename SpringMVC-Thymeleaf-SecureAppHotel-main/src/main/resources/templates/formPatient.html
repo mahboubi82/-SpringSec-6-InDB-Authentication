@@ -7,8 +7,20 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="with = device-with, initial-scale=1.0">
     <title>Nouveau Patient</title>
-
+    <script type="text/javascript" src="https://unpkg.com/webcam-easy/dist/webcam-easy.min.js"></script>
+<style>
+    aa {
+        padding: 10px;
+        background-color: tomato;
+        color: white;
+        text-decoration: black;
+    }
+    canvas {
+        display: none;
+    }
+</style>
 </head>
 <body>
     <div layout:fragment="content">
@@ -39,6 +51,22 @@
                                     <input type="text" name="score" class="form-control" th:value="${patient.score}">
                                     <span class="text-danger" th:errors="${patient.score}"></span>
                                 </div>
+                               <!-- <div>
+                                    <video id="webcam" autoplay playsinline width="400" height="300"></video>
+                                    <canvas id="canvas"></canvas>
+                                    <a download onclick="takeAPicture()">SNAP</a>
+                                    <script>
+                                        const webCamElement = document.getElementById("webcam");
+                                        const canvasElement = document.getElementById("canvas");
+                                        const webcam= new Webcam(webCamElement,"user", canvasElement);
+                                        webcam.start();
+                                        function takeAPicture(){
+                                            let picture = webcam.snap();
+                                            document.querySelector("a").href=picture;
+                                            webcam.stop();
+                                        }
+                                    </script>
+                                </div>-->
                                 <button  class="btn btn-success"> Save</button>
                             </form>
                         </div>

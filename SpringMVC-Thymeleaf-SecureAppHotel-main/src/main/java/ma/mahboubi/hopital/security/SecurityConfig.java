@@ -1,5 +1,7 @@
 package ma.mahboubi.hopital.security;
 
+import lombok.AllArgsConstructor;
+import ma.mahboubi.hopital.security.service.UserDetailServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,16 +13,24 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.util.matcher.AndRequestMatcher;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
-public class SecurityConfig {
-    @Autowired
+@AllArgsConstructor
+
+public class SecurityConfig  {
+
     private  PasswordEncoder passwordEncoder;
-    @Bean
+    private DataSource dataSource;
+    private UserDetailServiceImp userDetailServiceImp;
+    //@Bean
     public JdbcUserDetailsManager jdbcUserDetailsManager(DataSource dataSource){
         return new JdbcUserDetailsManager(dataSource);
     }
@@ -36,14 +46,34 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         //httpSecurity.formLogin();
-        httpSecurity.formLogin().loginPage("/login").defaultSuccessUrl("/").permitAll();
-        httpSecurity.rememberMe();
+
+        httpSecurity.formLogin().loginPage("/login").usernameParameter("username").defaultSuccessUrl("/").permitAll();
+
+
         httpSecurity.authorizeHttpRequests().requestMatchers("/webjars/**","/h2-console/**").permitAll();
         //httpSecurity.authorizeHttpRequests().requestMatchers("/user/**").hasRole("USER");
         //httpSecurity.authorizeHttpRequests().requestMatchers("/admin/**").hasRole("ADMIN");
         httpSecurity.authorizeHttpRequests().anyRequest().authenticated();
         httpSecurity.exceptionHandling().accessDeniedPage("/notAuthorized");
+        httpSecurity
+                .logout()
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/")
+                .and()
+                .rememberMe()
+                ;
+
+        httpSecurity.userDetailsService(userDetailServiceImp);
+
         return  httpSecurity.build();
 
+    }
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository(){
+        JdbcTokenRepositoryImpl tokenRepository =new JdbcTokenRepositoryImpl();
+        tokenRepository.setDataSource(dataSource);
+        return tokenRepository;
     }
 }

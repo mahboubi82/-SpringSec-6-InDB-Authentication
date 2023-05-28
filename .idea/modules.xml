@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/SpringMVC-Thymeleaf-SecureAppHotel-main.iml" filepath="$PROJECT_DIR$/.idea/SpringMVC-Thymeleaf-SecureAppHotel-main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/SpringMVC-Thymeleaf-SecureAppHotel-main/hotel.iml" filepath="$PROJECT_DIR$/SpringMVC-Thymeleaf-SecureAppHotel-main/hotel.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SpringMVC-Thymeleaf-SecureAppHotel-main/Hospital.iml" filepath="$PROJECT_DIR$/SpringMVC-Thymeleaf-SecureAppHotel-main/Hospital.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/SpringMVC-Thymeleaf-SecureAppHospital.iml" filepath="$PROJECT_DIR$/.idea/SpringMVC-Thymeleaf-SecureAppHospital.iml" />
     </modules>
   </component>
 </project>

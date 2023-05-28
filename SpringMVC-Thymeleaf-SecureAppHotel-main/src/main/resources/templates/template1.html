@@ -37,10 +37,10 @@
                         Patients
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                        <li th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}">
                             <a class="dropdown-item" th:href="@{/admin/formPatient}">New</a>
                         </li>
-                        <li th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                        <li th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}">
                             <hr class="dropdown-divider">
                         </li>
                         <li>

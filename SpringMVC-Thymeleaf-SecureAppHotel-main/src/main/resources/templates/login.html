@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Authentication</title>
@@ -12,33 +11,41 @@
     <div class="col-md-6 offset-3">
         <div class="card">
             <div class="card-header">Authentication</div>
-                <div class="card-body">
-                    <form method="post" th:action="@{/login}">
-                        <div class="mb-3 mt-3" >
-                            <label for="username" class="form-label">Username:</label>
-                            <input type="text" id="username" name="username" class="form-control" placeholder="Username">
-                        </div>
-                        <div class="mb-3 mt-3" >
-                            <label for="password" class="form-label">Password:</label>
-                            <input type="password" id="password" name="password" class="form-control" placeholder="Password">
-                        </div>
-                        <div class="form-check mb-3">
-                            <label class="form-check-label">
+
+            <div class="card-body">
+                <form method="post" th:action="@{/login}">
+                    <div th:if="${param.error}">
+                        <p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
+                    </div>
+
+                    <div th:if="${param.logout}">
+                        <p class="text-warning">You have been logged out.</p>
+                    </div>
+                    <div class="mb-3 mt-3">
+                        <label for="username" class="form-label">Username:</label>
+                        <input type="text" id="username" name="username" class="form-control" placeholder="Username">
+                        <span></span>
+                    </div>
+                    <div class="mb-3 mt-3">
+                        <label for="password" class="form-label">Password:</label>
+                        <input type="password" id="password" name="password" class="form-control"
+                               placeholder="Password">
+                    </div>
+                    <div class="form-check mb-3">
+                        <label class="form-check-label">
                             <input type="checkbox" name="remember-me" class="form-check-input">Remember ME
-                            </label>
-                        </div>
+                        </label>
+                        <div class="vr"></div>
 
-                            <button type="submit" class="btn btn-primary">Login</button>
+                    </div>
 
-                    </form>
-                </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
 
-
+                </form>
+            </div>
 
         </div>
     </div>
-
-
 </div>
 
 </body>
